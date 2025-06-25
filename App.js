@@ -1,12 +1,6 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-
-const quoteData = [
-    {text:"hello I'm text 1", author:"Text1"},
-    {text:"hello I'm text 2", author:"Text2"},
-    {text:"hello I'm text 3", author:"Text3"}
-]
-
+import quoteData from './components/quoteData.json'
 
 const App = () => {
 
