@@ -19,11 +19,11 @@ const App = () => {
     <View style={styles.container}>
         {quote && (
             <>
-                <Text>{quote.text}</Text>
-                <Text>{quote.author}</Text>
+                <Text style={styles.text}>"{quote.text}"</Text>
+                <Text style={styles.author}>- {quote.author}</Text>
             </> 
         )}
-        <Button title='click' onPress={getRandomQuote}/>
+        <Button title='click' onPress={getRandomQuote} />
     </View>
   )
 }
@@ -35,5 +35,16 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    text:{
+        fontWeight: 'bold',
+        fontFamily: 'TimesNewRoman',
+        fontSize: 20,
+    },
+    author: {
+        fontWeight: '500',
+        fontFamily: 'TimesNewRoman',
+        fontSize: 16,
+    },
+
 })
