@@ -37,11 +37,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     text:{
+        margin: 20,
+        textAlign: 'center',
         fontWeight: 'bold',
         fontFamily: 'TimesNewRoman',
         fontSize: 20,
     },
     author: {
+        marginBottom: 10,
         fontWeight: '500',
         fontFamily: 'TimesNewRoman',
         fontSize: 16,
