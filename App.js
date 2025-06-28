@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     },
     author: {
         marginBottom: 10,
+        color: '#fff',
         fontWeight: '500',
         fontFamily: 'TimesNewRoman',
         fontSize: 16,
