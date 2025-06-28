@@ -29,7 +29,7 @@ const App = () => {
   return (
      <>
         <ImageBackground ImageBackground
-        source={require('./assets/background.jpg')} // Add your background image in the assets folder
+        source={require('./assets/background.jpg')}
         style={styles.background}
         >
         <StatusBar style="light" />
