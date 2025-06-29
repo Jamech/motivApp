@@ -1,4 +1,5 @@
 import { Button, StyleSheet, Text, TouchableOpacity, View, Animated, ImageBackground  } from 'react-native' 
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState, useRef } from 'react'
 import quoteData from './components/quoteData.json'
 import { StatusBar } from 'expo-status-bar'
@@ -7,6 +8,47 @@ const App = () => {
 
     const [quote, setQuote] = useState(null)
     const fadeAnim = useRef(new Animated.Value(0)).current;
+    const [favorites, setFavorites] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const FAVORITES_KEY = '@favorite_quotes';
+
+    const loadFavorites = async () => {
+        try {
+        const saved = await AsyncStorage.getItem(FAVORITES_KEY);
+        if (saved) {
+            setFavorites(JSON.parse(saved));
+        }
+        } catch (e) {
+        console.log('Failed to load favorites:', e);
+        }
+    };
+
+        const saveFavorites = async (newFavorites) => {
+    try {
+        await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(newFavorites));
+    } catch (e) {
+        console.log('Failed to save favorites:', e);
+    }
+    };
+
+    const toggleFavorite = () => {
+    if (!quote) return;
+
+    const exists = favorites.find((q) => q.text === quote.text);
+    let updatedFavorites;
+
+    if (exists) {
+        // Remove it
+        updatedFavorites = favorites.filter((q) => q.text !== quote.text);
+    } else {
+        // Add it
+        updatedFavorites = [...favorites, quote];
+    }
+
+    setFavorites(updatedFavorites);
+    saveFavorites(updatedFavorites);
+    };
+
 
     const getRandomQuote = () => {
         const random = quoteData[Math.floor(Math.random() * quoteData.length)];
@@ -23,6 +65,7 @@ const App = () => {
         }).start();
     }
     useEffect(() => {
+        loadFavorites();
         getRandomQuote();
     },[])
 
@@ -44,6 +87,18 @@ const App = () => {
             <TouchableOpacity style={styles.btn} onPress={getRandomQuote}>
                 <Text style={styles.btnText}>New quote</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+            style={[
+                styles.btn,
+                { backgroundColor: favorites.find((q) => q.text === quote?.text) ? '#e74c3c' : '#000' },
+            ]}
+            onPress={toggleFavorite}
+            >
+                <Text style={styles.btnText}>
+                    {favorites.find((q) => q.text === quote?.text) ? 'Remove Favorite' : 'Add to Favorites'}
+                </Text>
+            </TouchableOpacity>
+
         </View>
         </ImageBackground>
     </>
