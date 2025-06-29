@@ -29,7 +29,7 @@ const App = () => {
   return (
      <>
         <ImageBackground
-        source={require('./assets/background.jpg')}
+        source={require('./assets/background1.jpg')}
         style={styles.background}
         >
         <StatusBar style="light" />
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
   },
     btn: {
-        backgroundColor: '#000',
         paddingVertical: 12,
         paddingHorizontal: 24,
         borderRadius: 25,
