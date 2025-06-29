@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState, useRef } from 'react'
 import quoteData from './components/quoteData.json'
 import { StatusBar } from 'expo-status-bar'
+import { Modal, FlatList } from 'react-native'
 
 const App = () => {
 
@@ -99,8 +100,40 @@ const App = () => {
                 </Text>
             </TouchableOpacity>
 
+            <TouchableOpacity style={[styles.btn, { backgroundColor: '#2980b9', marginTop: 10 }]}
+                        onPress={() => setModalVisible(true)}>
+        <Text style={styles.btnText}>View Favorites ({favorites.length})</Text>
+            </TouchableOpacity>
+
+
         </View>
         </ImageBackground>
+
+        <Modal visible={modalVisible} animationType="slide"onRequestClose={() => setModalVisible(false)}>
+            <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Favorite Quotes</Text>
+
+                {favorites.length === 0 ? (
+            <Text style={styles.noFavoritesText}>No favorite quotes yet.</Text>
+            ) : (
+            <FlatList data={favorites} keyExtractor={(item) => item.text}renderItem={({ item }) => (
+          <View style={styles.favoriteItem}>
+            <Text style={styles.text}>"{item.text}"</Text>
+            <Text style={styles.author}>- {item.author}</Text>
+          </View>
+        )}
+      />
+    )}
+
+    <TouchableOpacity
+      style={[styles.btn, { marginTop: 20 }]}
+      onPress={() => setModalVisible(false)}
+    >
+      <Text style={styles.btnText}>Close</Text>
+    </TouchableOpacity>
+  </View>
+</Modal>
+
     </>
 
   )
@@ -165,7 +198,33 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center'
-}
+    },
+    modalContainer: {
+    flex: 1,
+    backgroundColor: '#111',
+    padding: 20,
+    paddingTop: 50,
+    },
+    modalTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#fff',
+        textAlign: 'center',
+    },
+    noFavoritesText: {
+        color: '#aaa',
+        fontSize: 18,
+        textAlign: 'center',
+        marginTop: 40,
+    },
+    favoriteItem: {
+        backgroundColor: 'rgba(255,255,255,0.05)',
+        padding: 16,
+        borderRadius: 15,
+        marginBottom: 12,
+    },
+
 
 
 })
