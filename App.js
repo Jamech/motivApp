@@ -123,25 +123,19 @@ const App = () => {
                 {favorites.length === 0 ? (
             <Text style={styles.noFavoritesText}>No favorite quotes yet.</Text>
             ) : (
-            <FlatList
-  data={favorites}
-  keyExtractor={(item) => item.text}
-  renderItem={({ item }) => (
-    <View style={styles.favoriteItem}>
-      <Text style={styles.text}>"{item.text}"</Text>
-      <Text style={styles.author}>- {item.author}</Text>
+            <FlatList data={favorites} keyExtractor={(item) => item.text} renderItem={({ item }) => (
+                <View style={styles.favoriteItem}>
+                    <Text style={styles.text}>"{item.text}"</Text>
+                    <Text style={styles.author}>- {item.author}</Text>
 
-      <TouchableOpacity
-        style={styles.removeBtn}
-        onPress={() => removeFromFavorites(item)}
-      >
-        <Text style={styles.removeBtnText}>Remove</Text>
-      </TouchableOpacity>
-    </View>
-  )}
-/>
+                    <TouchableOpacity style={styles.removeBtn} onPress={() => removeFromFavorites(item)} >
+                    <Text style={styles.removeBtnText}>Remove</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+                />
 
-    )}
+        )}
 
     <TouchableOpacity
       style={[styles.btn, { marginTop: 20 }]}
