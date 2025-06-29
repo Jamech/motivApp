@@ -50,6 +50,13 @@ const App = () => {
     saveFavorites(updatedFavorites);
     };
 
+    const removeFromFavorites = (quoteToRemove) => {
+    const updatedFavorites = favorites.filter(q => q.text !== quoteToRemove.text);
+    setFavorites(updatedFavorites);
+    saveFavorites(updatedFavorites);
+    };
+
+
 
     const getRandomQuote = () => {
         const random = quoteData[Math.floor(Math.random() * quoteData.length)];
@@ -116,13 +123,24 @@ const App = () => {
                 {favorites.length === 0 ? (
             <Text style={styles.noFavoritesText}>No favorite quotes yet.</Text>
             ) : (
-            <FlatList data={favorites} keyExtractor={(item) => item.text}renderItem={({ item }) => (
-          <View style={styles.favoriteItem}>
-            <Text style={styles.text}>"{item.text}"</Text>
-            <Text style={styles.author}>- {item.author}</Text>
-          </View>
-        )}
-      />
+            <FlatList
+  data={favorites}
+  keyExtractor={(item) => item.text}
+  renderItem={({ item }) => (
+    <View style={styles.favoriteItem}>
+      <Text style={styles.text}>"{item.text}"</Text>
+      <Text style={styles.author}>- {item.author}</Text>
+
+      <TouchableOpacity
+        style={styles.removeBtn}
+        onPress={() => removeFromFavorites(item)}
+      >
+        <Text style={styles.removeBtnText}>Remove</Text>
+      </TouchableOpacity>
+    </View>
+  )}
+/>
+
     )}
 
     <TouchableOpacity
@@ -225,6 +243,18 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
 
-
+    removeBtn: {
+        marginTop: 10,
+        backgroundColor: '#e74c3c',
+        paddingVertical: 6,
+        paddingHorizontal: 14,
+        borderRadius: 20,
+        alignSelf: 'flex-end',
+    },
+    removeBtnText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
+    }
 
 })
